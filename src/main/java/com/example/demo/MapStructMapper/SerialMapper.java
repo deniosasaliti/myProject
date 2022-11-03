@@ -1,6 +1,5 @@
 package com.example.demo.MapStructMapper;
 
-import com.example.demo.Entity.Serial;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

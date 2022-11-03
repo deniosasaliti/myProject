@@ -8,6 +8,7 @@ CREATE TABLE user
     CONSTRAINT pk_user PRIMARY KEY (id)
 );
 
+
 CREATE TABLE post
 (
     post_id       BIGINT       NOT NULL,
@@ -53,6 +54,7 @@ CREATE TABLE token
 ALTER TABLE token
     ADD CONSTRAINT FK_TOKEN_ON_USER FOREIGN KEY (user_id) REFERENCES user (id);
 
+
 CREATE TABLE vote
 (
     vote_id   BIGINT NOT NULL,
@@ -67,6 +69,7 @@ ALTER TABLE vote
 
 ALTER TABLE vote
     ADD CONSTRAINT FK_VOTE_ON_USER FOREIGN KEY (user_id) REFERENCES user (id);
+
 
 
 
@@ -89,6 +92,7 @@ alter table permissions
 
 alter table user
         add constraint FK_ROLE_ON_USER foreign key (role_id) references role(id);
+
 
 
 

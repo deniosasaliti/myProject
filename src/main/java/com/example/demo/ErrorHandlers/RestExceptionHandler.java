@@ -1,5 +1,4 @@
 package com.example.demo.ErrorHandlers;
-
 import com.example.demo.Dto.Error.ErrorDto;
 import com.example.demo.exceptions.NotAuthenticationException;
 import com.example.demo.exceptions.SpringRedditException;

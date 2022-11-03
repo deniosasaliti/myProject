@@ -15,7 +15,9 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+
 @Table(name = "vote")
+
 public class Vote {
 
 

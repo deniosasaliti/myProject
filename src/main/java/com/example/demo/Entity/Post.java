@@ -2,7 +2,9 @@ package com.example.demo.Entity;
 
 import com.example.demo.Entity.enums.Categories;
 import com.sun.istack.Nullable;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -14,7 +16,9 @@ import java.util.*;
 @Setter
 @ToString
 @Entity
+
 @Table(name = "post")
+
 public class Post {
 
 

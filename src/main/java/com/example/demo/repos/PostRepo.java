@@ -1,7 +1,9 @@
 package com.example.demo.repos;
 
+
 import com.example.demo.Dto.Post.PostDetail;
 import com.example.demo.Entity.enums.Categories;
+
 import com.example.demo.Entity.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,7 +12,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 import org.springframework.transaction.annotation.Transactional;
+
 
 public interface PostRepo extends JpaRepository<Post,Long> {
     @Modifying

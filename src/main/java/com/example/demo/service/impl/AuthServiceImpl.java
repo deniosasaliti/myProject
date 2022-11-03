@@ -102,6 +102,17 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public void signup(SignUpRequestDto signUpRequestDto) throws Exception {
 
+//        Role role = new Role();
+//        role.setName("ROLE_user");
+//        User user = new User();
+//        user.setRole(role);
+//        user.setEmail(signUpRequestDto.getEmail());
+//        user.setName(signUpRequestDto.getUsername());
+//        user.setEmail(signUpRequestDto.getEmail());
+//        user.setPassword(passwordEncoder.encode(signUpRequestDto.getPassword()));
+//        userRepository.save(user);
+//        roleRepository.save(role);
+
         Role role = new Role();
         role.setName("userRole");
         roleRepository.save(role);
@@ -112,6 +123,8 @@ public class AuthServiceImpl implements AuthService {
         user.setEmail(signUpRequestDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpRequestDto.getPassword()));
         userRepository.save(user);
+
+
 
 
 

@@ -1,6 +1,5 @@
 package com.example.demo.Entity;
 
-import com.example.demo.Entity.enums.RatingType;
 import lombok.*;
 
 import javax.persistence.*;

@@ -1,19 +1,19 @@
 package com.example.demo.security;
 
 import com.example.demo.exceptions.SpringRedditException;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
-import java.util.*;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -63,7 +63,6 @@ public class TokenProvider {
     public Authentication getAuth(Long id){
         UserDetails userDetails = principalDetailsService.loadUserById(id);
         return new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities());
-
     }
 
     public Long getUserIdFromToken(String token) {

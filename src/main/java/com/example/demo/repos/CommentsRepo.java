@@ -1,10 +1,6 @@
 package com.example.demo.repos;
 
 import com.example.demo.Entity.Comment;
-import com.example.demo.Entity.Post;
-import org.hibernate.boot.model.source.spi.Sortable;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

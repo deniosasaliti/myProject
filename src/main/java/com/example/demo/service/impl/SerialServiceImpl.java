@@ -7,6 +7,7 @@ import com.example.demo.repos.ActorRepository;
 import com.example.demo.repos.AudiRepository;
 import com.example.demo.repos.SerialRepository;
 import com.example.demo.service.SerialService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -44,10 +45,10 @@ public class SerialServiceImpl implements SerialService {
         return serialRepository.getAllSerialsByUserId(id);
     }
 
-
-
-
-
+    @Override
+    public List<SerialFrontPageInfo> findAllBy(PageRequest of) {
+        return serialRepository.findAllBy(of);
+    }
 
 
 }

@@ -7,6 +7,8 @@ import com.example.demo.Entity.Tag;
 import com.example.demo.Entity.enums.Categories;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
@@ -16,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+
+@SpringBootTest()
 class PostRepoTest {
     @Autowired
     PostRepo postRepo;

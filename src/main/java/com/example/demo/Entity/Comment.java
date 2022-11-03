@@ -7,7 +7,9 @@ import java.time.Instant;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
+
 @Table(name = "comment")
+
 public class Comment {
     public Comment(Long id, @NotEmpty String text, Post post, Instant createdDate, User user) {
         this.id = id;

@@ -9,13 +9,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class PrincipalDetailsService implements UserDetailsService {
 
     private final userRepos userRepository;
+
 
     @Transactional
     @Override
@@ -35,3 +35,4 @@ public class PrincipalDetailsService implements UserDetailsService {
         return PrincipalDetails.create(user);
     }
 }
+

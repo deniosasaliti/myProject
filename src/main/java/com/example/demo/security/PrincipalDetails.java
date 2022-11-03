@@ -1,17 +1,18 @@
 package com.example.demo.security;
 
-import com.example.demo.Entity.Role;
+
 import com.example.demo.Entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import java.util.Collection;
+
 @Data
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,26 +22,30 @@ public class PrincipalDetails implements UserDetails {
     private Long id;
     private String name;
     private String password;
+
     private Collection<? extends GrantedAuthority> authorities;
+
 
     public static PrincipalDetails create(User user) {
         return PrincipalDetails.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .password(user.getPassword())
-                .authorities(toGrantedAuthority(user.getRole().getName()))
+
+                .authorities(user.getRole().getPermissions())
                 .build();
     }
 
-     private static List<GrantedAuthority> toGrantedAuthority (String role){
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(role));
-        return  authorities;
-    }
+//     private static List<GrantedAuthority> toGrantedAuthority (String role){
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        authorities.add(new SimpleGrantedAuthority(role));
+//        return  authorities;
+//    }
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         return authorities;
     }
 
@@ -78,4 +83,6 @@ public class PrincipalDetails implements UserDetails {
 
 
 
+
 }
+

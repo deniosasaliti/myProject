@@ -7,7 +7,6 @@ import com.example.demo.Dto.payload.RefreshTokenRequest;
 import com.example.demo.Dto.payload.SignUpRequestDto;
 import com.example.demo.service.AuthService;
 import com.example.demo.service.RefreshTokenService;
-import com.example.demo.service.SerialService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +22,7 @@ public class AuthCont {
 
     private final AuthService authService;
 
-    final SerialService serialService;
-    final RefreshTokenService refreshTokenService;
+    private final RefreshTokenService refreshTokenService;
 
 
 
@@ -51,6 +49,8 @@ public class AuthCont {
         refreshTokenService.deleteToken(refreshTokenRequest.getRefreshToken());
         return ResponseEntity.status(HttpStatus.OK).body("refresh token deleted ");
     }
+
+
 
 
 

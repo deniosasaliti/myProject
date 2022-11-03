@@ -5,32 +5,30 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
+@ToString
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
 
     private String name;
 
 
-    @ElementCollection()
-    @CollectionTable(name = "permissions", joinColumns = @JoinColumn(name = "role_id"))
-    @Enumerated(EnumType.STRING)
-    private List<Permissions> permissions;
+
+
 
 
     @Override
@@ -45,4 +43,15 @@ public class Role {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+
+    @ElementCollection(targetClass = Permissions.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "permissions", joinColumns = @JoinColumn(name = "role_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Permissions> permissions;
+
+
+
+
 }
+

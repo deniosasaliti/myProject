@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 public enum Permissions implements GrantedAuthority {
 
 
+
     SAVE_OWN_POST,
     DELETE_OWN_POST,
     MODERATE_OWN_POST,
@@ -18,6 +19,7 @@ public enum Permissions implements GrantedAuthority {
     MODERATE_COMMENT,
     DELETE_COMMENT,
     CALL_THE_POLICE;
+
 
 
     @Override

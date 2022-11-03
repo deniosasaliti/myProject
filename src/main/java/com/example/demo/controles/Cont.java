@@ -1,11 +1,8 @@
 package com.example.demo.controles;
 
-import com.example.demo.Dto.Comment.CommentDto;
 import com.example.demo.Dto.Post.PostDto;
 import com.example.demo.Dto.Post.PostIdDto;
 import com.example.demo.Dto.Post.PostResponseDto;
-import com.example.demo.Dto.Serial.SerialD2;
-import com.example.demo.Dto.Serial.SerialFrontPageInfo;
 import com.example.demo.Entity.Post;
 import com.example.demo.Entity.User;
 import com.example.demo.Entity.enums.Categories;
@@ -19,11 +16,9 @@ import com.example.demo.service.SerialService;
 import com.example.demo.service.VoteService;
 import com.example.demo.service.impl.AwsBucketServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +29,6 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -120,12 +114,12 @@ public class Cont {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    @PostMapping("/addComment")
-    public HttpStatus addCommend(@RequestBody() CommentDto commentDto,
-                                     Authentication authentication){
-        postService.save(commentDto);
-        return  HttpStatus.OK;
-    }
+//    @PostMapping("/addComment")
+//    public HttpStatus addCommend(@RequestBody() CommentDto commentDto,
+//                                     Authentication authentication){
+//        postService.save(commentDto);
+//        return  HttpStatus.OK;
+//    }
 
 
 
@@ -184,26 +178,26 @@ public class Cont {
         return "";
     }
 
-    @GetMapping("/getFrontPageInfo")
-    public ResponseEntity<List<SerialFrontPageInfo>> getSerialsById(){
+//    @GetMapping("/getFrontPageInfo")
+//    public ResponseEntity<List<SerialFrontPageInfo>> getSerialsById(){
+//
+//        List<SerialFrontPageInfo> pageInfos =
+//                serialService.findAllBy(PageRequest.of(0,30));
+//        return new ResponseEntity<>(pageInfos,HttpStatus.OK);
+//    }
 
-        List<SerialFrontPageInfo> pageInfos =
-                serialRepository.findAllBy(PageRequest.of(0,30));
-        return new ResponseEntity<>(pageInfos,HttpStatus.OK);
-    }
-
-    @Secured("ROLE_USER")
-    @PostMapping("/getAllSerialByIdForSideBar")
-    public ResponseEntity<List<SerialFrontPageInfo>> getSerialByUserId(@RequestParam long id){
-        List<SerialFrontPageInfo> allSerialsByUserId = serialService.getAllSerialsByUserId(id);
-        return new ResponseEntity<>(allSerialsByUserId,HttpStatus.OK);
-    }
-
-    @PostMapping("/getAllSerialById")
-    public ResponseEntity<SerialD2> getSerialById(@RequestParam long id){
-        SerialD2 serial = serialService.getSerialByIdFetchAudios(id);
-        return new ResponseEntity<>(serial,HttpStatus.OK);
-    }
+//    @Secured("ROLE_USER")
+//    @PostMapping("/getAllSerialByIdForSideBar")
+//    public ResponseEntity<List<SerialFrontPageInfo>> getSerialByUserId(@RequestParam long id){
+//        List<SerialFrontPageInfo> allSerialsByUserId = serialService.getAllSerialsByUserId(id);
+//        return new ResponseEntity<>(allSerialsByUserId,HttpStatus.OK);
+//    }
+//
+//    @PostMapping("/getAllSerialById")
+//    public ResponseEntity<SerialD2> getSerialById(@RequestParam long id){
+//        SerialD2 serial = serialService.getSerialByIdFetchAudios(id);
+//        return new ResponseEntity<>(serial,HttpStatus.OK);
+//    }
 
 }
 

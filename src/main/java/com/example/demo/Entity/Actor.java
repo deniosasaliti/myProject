@@ -1,13 +1,12 @@
 package com.example.demo.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-import org.hibernate.Hibernate;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.event.ContextStartedEvent;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
