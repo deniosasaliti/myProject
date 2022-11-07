@@ -6,4 +6,4 @@ spring:
           github:
             clientId: 8d5a48de4c8a316d2ae1
             clientSecret: 1b350d1f007027ce3346a88c496f5d1d4883838e
-# ...
+            redirectUri: http://localhost:4200/callback

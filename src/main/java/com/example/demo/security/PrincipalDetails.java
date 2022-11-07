@@ -8,8 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
+import java.util.Map;
 
 @Data
 
@@ -42,6 +44,11 @@ public class PrincipalDetails implements UserDetails {
 //        return  authorities;
 //    }
 
+
+//    @Override
+//    public Map<String, Object> getAttributes() {
+//        return null;
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

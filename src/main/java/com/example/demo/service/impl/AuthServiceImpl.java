@@ -65,7 +65,7 @@ public class AuthServiceImpl implements AuthService {
         User userForID = userRepository.findByName(loginRequestDto.getName())
                 .orElseThrow(()-> new UsernameNotFoundException("user by username " +
                         loginRequestDto.getName() + " not found"));
-
+        System.out.println(authentication.getAuthorities() + "AAAAAAAAAAAAAAAAAAAAA");
         SecurityContextHolder.getContext().setAuthentication(authentication);
         RefreshToken refreshToken = refreshTokenService.createToken();
         String token = tokenProvider.createToken(authentication);

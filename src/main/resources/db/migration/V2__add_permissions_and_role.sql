@@ -1,13 +1,3 @@
-insert into role (id, name)
-values (1,'USER');
-insert into role (id, name)
-values (2,'MODERATOR');
-insert into role (id, name)
-values (3,'ADMIN');
-insert into role (id, name)
-values (4,'OVERLORD');
-
-
 insert into permissions (permissions, role_id)
 values ('SAVE_OWN_POST',1);
 insert into permissions (permissions, role_id)

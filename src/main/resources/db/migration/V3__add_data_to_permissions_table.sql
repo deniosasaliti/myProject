@@ -1,26 +1,26 @@
-insert into permissions (role_id, permission)
+insert into permissions (role_id, permissions)
 values (1,'CREATE_POST');
-insert into permissions (role_id, permission)
+insert into permissions (role_id, permissions)
 values (1,'DELETE_OWN_POST');
-insert into permissions (role_id, permission)
+insert into permissions (role_id, permissions)
 values (1,'MODERATE_OWN_POST');
-insert into permissions (role_id, permission)
+insert into permissions (role_id, permissions)
 values (1,'CREATE_COMMENT');
-insert into permissions (role_id, permission)
+insert into permissions (role_id, permissions)
 values (1,'DELETE_OWN_COMMENT');
-insert into permissions (role_id, permission)
+insert into permissions (role_id, permissions)
 values (1,'MODERATE_OWN_COMMENT');
-insert into permissions (role_id, permission)
+insert into permissions (role_id, permissions)
 values (2,'DELETE_POST');
-insert into permissions (role_id, permission)
+insert into permissions (role_id, permissions)
 values (2,'MODERATE_POST');
-insert into permissions (role_id, permission)
+insert into permissions (role_id, permissions)
 values (2,'DELETE_COMMENT');
-insert into permissions (role_id, permission)
+insert into permissions (role_id, permissions)
 values (2,'MODERATE_COMMENT');
-insert into permissions (role_id, permission)
+insert into permissions (role_id, permissions)
 values (3,'BAN_USER');
-insert into permissions (role_id, permission)
+insert into permissions (role_id, permissions)
 values (3,'UNBAN_USER');
 
 
