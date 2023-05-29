@@ -8,6 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
@@ -18,7 +21,7 @@ import java.util.Map;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails,OAuth2User, OidcUser {
 
 
     private Long id;
@@ -26,6 +29,8 @@ public class PrincipalDetails implements UserDetails {
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
+
+    private transient Map<String, Object> attributes;
 
 
     public static PrincipalDetails create(User user) {
@@ -36,6 +41,13 @@ public class PrincipalDetails implements UserDetails {
 
                 .authorities(user.getRole().getPermissions())
                 .build();
+    }
+
+
+    public static PrincipalDetails create(User user, Map<String, Object> attributes) {
+        PrincipalDetails principalDetails = PrincipalDetails.create(user);
+        principalDetails.setAttributes(attributes);
+        return principalDetails;
     }
 
 //     private static List<GrantedAuthority> toGrantedAuthority (String role){
@@ -49,6 +61,11 @@ public class PrincipalDetails implements UserDetails {
 //    public Map<String, Object> getAttributes() {
 //        return null;
 //    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -87,9 +104,19 @@ public class PrincipalDetails implements UserDetails {
     }
 
 
+    @Override
+    public Map<String, Object> getClaims() {
+        return null;
+    }
 
+    @Override
+    public OidcUserInfo getUserInfo() {
+        return null;
+    }
 
-
-
+    @Override
+    public OidcIdToken getIdToken() {
+        return null;
+    }
 }
 

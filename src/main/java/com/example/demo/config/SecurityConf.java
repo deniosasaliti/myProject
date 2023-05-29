@@ -1,12 +1,8 @@
 package com.example.demo.config;
 
-import com.example.demo.security.JwtAuthenticationFilter;
-import com.example.demo.security.PrincipalDetailsService;
-import com.example.demo.security.TokenProvider;
-import com.example.demo.security.oauth2.CookieOAuth2AuthorizationRequestRepository;
-import com.example.demo.security.oauth2.InMemoryRequestRepository;
-import com.example.demo.security.oauth2.OAuth2AuthenticationFailureHandler;
-import com.example.demo.security.oauth2.OAuth2AuthenticationSuccessHandler;
+import com.example.demo.security.*;
+import com.example.demo.security.oauth2.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +22,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -60,9 +53,18 @@ public class SecurityConf  extends WebSecurityConfigurerAdapter {
 
       private final TokenProvider tokenProvider;
 
-      private final ObjectMapper mapper;
 
-      private final InMemoryRequestRepository inMemoryRequestRepository;
+
+
+
+
+      private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+      private final OAuth2UserService oAuth2UserService;
+
+      private final CustomOidcUserService customOidcUserService;
+
+
+
 
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
@@ -82,26 +84,44 @@ public class SecurityConf  extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and()
-                .csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .formLogin().disable()
-                .httpBasic().disable()
-                .authorizeRequests()
-
-                     .antMatchers( "/auth/**","/cont/**","/serial/public/**","/oauth2/**","/login/**").permitAll()
-                     .anyRequest().authenticated()
+        http
+                    .cors()
                 .and()
-                .oauth2Login()
-                .authorizationEndpoint()
-                .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository)
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .successHandler( this::successHandler )
+                    .csrf()
+                    .disable()
+                    .formLogin()
+                    .disable()
+                    .httpBasic()
+                    .disable()
+                    .exceptionHandling()
+                    .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
-                .exceptionHandling()
-                .authenticationEntryPoint( this::authenticationEntryPoint )
-                .and().logout(cust -> cust.addLogoutHandler( this::logout ).logoutSuccessHandler( this::onLogoutSuccess ));
+                    .authorizeRequests()
+                    .antMatchers("/auth/**", "/oauth2/**","/serial/public/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
+                .and()
+                    .oauth2Login()
+                    .authorizationEndpoint()
+                    .baseUri("/oauth2/authorize")
+                    .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository)
+                        .and()
+                    .redirectionEndpoint()
+                    .baseUri("/login/oauth2/code/*")
+                        .and()
+                    .userInfoEndpoint()
+                    .userService(oAuth2UserService)
+                    .oidcUserService(customOidcUserService)
+                        .and()
+                    .successHandler(oAuth2AuthenticationSuccessHandler)
+                    .failureHandler(oAuth2AuthenticationFailureHandler);
 
 
 
@@ -127,19 +147,9 @@ public class SecurityConf  extends WebSecurityConfigurerAdapter {
 
 
 
-    private void successHandler( HttpServletRequest request,
-                                 HttpServletResponse response, Authentication authentication ) throws IOException {
-        String token = "qwe222";
-        response.getWriter().write(
-                mapper.writeValueAsString( Collections.singletonMap( "accessToken", token ) )
-        );
-    }
 
-    private void authenticationEntryPoint(HttpServletRequest request, HttpServletResponse response,
-                                          AuthenticationException authException ) throws IOException {
-        response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
-        response.getWriter().write( mapper.writeValueAsString( Collections.singletonMap( "error", "Unauthenticated" ) ) );
-    }
+
+
 
     @Override
     public void configure(WebSecurity web) throws Exception {

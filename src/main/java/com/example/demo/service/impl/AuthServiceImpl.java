@@ -9,6 +9,7 @@ import com.example.demo.Entity.Role;
 import com.example.demo.Entity.User;
 import com.example.demo.repos.RoleRepository;
 import com.example.demo.repos.userRepos;
+import com.example.demo.security.PrincipalDetails;
 import com.example.demo.security.TokenProvider;
 import com.example.demo.service.AuthService;
 import com.example.demo.service.MailService;
@@ -50,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
 
 
 
-    public ResponseEntity<AuthResponseDto> login(LoginRequestDto loginRequestDto) {
+    public AuthResponseDto login(LoginRequestDto loginRequestDto) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -62,21 +63,37 @@ public class AuthServiceImpl implements AuthService {
                 )
         );
 
-        User userForID = userRepository.findByName(loginRequestDto.getName())
-                .orElseThrow(()-> new UsernameNotFoundException("user by username " +
-                        loginRequestDto.getName() + " not found"));
+
         System.out.println(authentication.getAuthorities() + "AAAAAAAAAAAAAAAAAAAAA");
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        User userForID = userRepository.findByName(authentication.getName())
+                .orElseThrow(()-> new UsernameNotFoundException("user by username " +
+                        authentication.getName() + " not found"));
+
+        return loginProcess(authentication,userForID.getId());
+    }
+
+//    @Override
+//    public AuthResponseDto oauth2login() {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+//        return loginProcess(authentication,principalDetails.getIdToken());
+//    }
+
+    private AuthResponseDto  loginProcess(Authentication authentication,long id) {
+
+
+
         RefreshToken refreshToken = refreshTokenService.createToken();
         String token = tokenProvider.createToken(authentication);
-        AuthResponseDto authResponseDto = AuthResponseDto.builder()
-        .token(token)
-        .expireTime(Date.from(Instant.now().plusMillis(tokenExpireTime)))
-                .userId(userForID.getId())
+        return AuthResponseDto.builder()
+                .token(token)
+                .expireTime(Date.from(Instant.now().plusMillis(tokenExpireTime)))
+                .userId(id)
                 .refreshToken(refreshToken.getToken())
                 .build();
 
-        return ResponseEntity.ok(authResponseDto);
     }
 
     public AuthResponseDto refreshToken(RefreshTokenRequest refreshTokenRequest){
